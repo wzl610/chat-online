@@ -1,11 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include header %>
+    <form action="#" id="login-form" method="post">
+        <div class="input-wrap">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" name="username"/>
+        </div>
+        <div class="input-wrap">
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password"/>
+        </div>
+        <a href="javascript:void(0);" id="submit-btn">登录</a>
+        <a href="javascript:void(0);" class="reg-link">没有账号？点击注册</a>
+    </form>
+    <form action="#" id="reg-form" method="post">
+        <div class="input-wrap">
+            <label for="re-username">用户名:</label>
+            <input type="text" id="re-username" name="re-username"/>
+        </div>
+        <div class="input-wrap">
+            <label for="re-password">密码:</label>
+            <input type="password" id="re-password" name="re-password"/>
+        </div>
+        <div class="input-wrap">
+            <label for="re-password2">重复新密码:</label>
+            <input type="password" id="re-password2" name="re-password2"/>
+        </div>
+        <a href="javascript:void(0);" id="reg-btn">注册</a>
+        <a href="javascript:void(0);" class="login-link">已有账号？点击登录</a>
+    </form>
+    <script type="text/javascript" src="/js/index.js"></script>
+<%- include footer %>
