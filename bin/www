@@ -88,3 +88,30 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+var onlineCount = 0;//在线人数
+var onlineList = {};//在线列表  不能用数组！！！
+io = require('socket.io').listen(server);
+//socket一般都是单页创建，如果出现跨页的话会出现问题
+io.on('connection',function(socket){
+    socket.on('login',function(obj){
+        socket.name = obj.name;
+        if(!onlineList[obj.name]){  
+            onlineList[obj.name] = obj.name;
+            onlineCount++;
+            io.emit('login',{'onlineList':onlineList,'onlineCount':onlineCount,'user':obj.name});
+        }
+    });
+
+    socket.on('message',function(obj){
+        io.emit('message',{'msg':obj.msg,'user':obj.name});
+    });
+
+    socket.on('disconnect',function(){
+        if(onlineList[socket.name]){
+            delete onlineList[socket.name];
+            onlineCount--;
+            io.emit('logout',{'onlineList':onlineList,'onlineCount':onlineCount,'user':socket.name});
+        }
+    })
+});

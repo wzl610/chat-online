@@ -1,0 +1,18 @@
+<%- include header %>
+    <header>
+        <div class="title">webSocket聊天室</div>
+        <div class="info">
+            <input type="hidden" id="username" value="<%=user%>"/>
+            <%=user%> | <a href="/logout" id="logout">退出</a>
+        </div>
+    </header>
+    <div class="chat">
+        <div class="online-count">当前共有<span class="num">3</span>人在线，在线列表:<span class="online-list">wzl610、blue</span>
+        </div>
+    </div>
+    <div class="input-box">
+        <input type="text" class="chat-input"/>
+        <button class="chat-button">提交</button>
+    </div>
+    <script type="text/javascript" src="/js/chat.js"></script>
+<%- include footer %>

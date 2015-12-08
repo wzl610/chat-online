@@ -8,7 +8,7 @@ module.exports = function(app) {
     app.post('/login',function(req,res){
         var newUser = new User({
             name : req.param('username'),
-            password : req.parem('password')
+            password : req.param('password')
         });
         newUser.operator('get',function(err,user){
             res.writeHead(200, { 'Content-Type': 'application/json' }); 
@@ -23,10 +23,13 @@ module.exports = function(app) {
                     code : 0,
                     msg : "用户不存在!"
                 }));//返回错误
-            }else if(user.password!=password){
-                return res.redirect('/login');//返回登录页
+            }else if(user.password!=newUser.password){
+                res.end(JSON.stringify({
+                    code : 0,
+                    msg : "密码错误!"
+                }));//返回错误
             }else{
-                req.session.user = name;
+                req.session.user = newUser.name;
                 res.end(JSON.stringify({
                     code : 1,
                     msg : "登录成功!"
@@ -75,8 +78,17 @@ module.exports = function(app) {
 
     //聊天页面
     app.get('/chat',function(req,res){
-        res.render('chat');
+        if(req.session.user){
+            res.render('chat',{"user":req.session.user});
+        }else{
+            res.redirect('/');
+        }
     })
-};
 
-//req.param('name')  
+    //退出
+    app.get('/logout',function(req,res){
+        req.session.user = '';
+        res.render('index');
+    })
+
+};
