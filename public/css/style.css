@@ -3,6 +3,8 @@
     text-decoration: none;
     font-size: 14px;
     margin : 0;
+    padding: 0;
+    list-style: none;
 }
 
 body{
@@ -145,6 +147,7 @@ header{
     text-align: right;
     padding: 10px;
     clear: both;
+    margin-right: 180px;
 }
 
 section.mymsg>div{
@@ -222,4 +225,33 @@ section.othermsg>div:before{
     border-top: solid transparent;
     border-right: 7px solid #fff;
     border-bottom: 4px solid transparent;
+}
+
+.online-count{
+    width: 150px;
+    height: 60%;
+    position: fixed;
+    right: 0;
+    top: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.num{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.online-list{
+    margin: 10px 0 0 5px;
+    font-size: 14px;
+}
+
+.online-list li{
+    margin-bottom: 5px;
+}
+
+.online-link{
+    color : #333;
 }

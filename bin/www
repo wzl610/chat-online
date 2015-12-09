@@ -90,29 +90,39 @@ function onListening() {
 }
 
 var onlineCount = 0;//在线人数
-var onlineList = {};//在线列表  不能用数组！！！
+var socketList = [];//socket池,不能用对象，不然会超过最大存储上限！！！
+var onlineList = {};//不能用数组，不然无法传值....
 io = require('socket.io').listen(server);
 //socket一般都是单页创建，如果出现跨页的话会出现问题
 io.on('connection',function(socket){
-    socket.send('hi');//message接收,对于当前用户
-    socket.emit('msg',{'msg':"11"});//给当前用户发信息
-    socket.broadcast.emit('other');//给除了当前链接以外的所有人发信息
+    //socket.send('hi');//message接收,对于当前用户
+    //socket.emit('test',{'msg':"11"});//给当前用户发信息
+    //socket.broadcast.emit('other');//给除了当前链接以外的所有人发信息
     socket.on('login',function(obj){
-        socket.name = obj.name;
-        if(!onlineList[obj.name]){  
+        if(!socketList[obj.name]){  
+            //onlineList[obj.name] = obj.name;
+            socketList[obj.name] = socket;
             onlineList[obj.name] = obj.name;
+            socket.name = obj.name;
             onlineCount++;
             io.emit('login',{'onlineList':onlineList,'onlineCount':onlineCount,'user':obj.name});//通知所有的人，包括当前用户
         }
     });
 
     socket.on('msg',function(obj){
-        io.emit('msg',{'msg':obj.msg,'user':obj.name});
+        if(obj.to){
+          socketList[obj.to].send({'msg':obj.msg,'user':obj.name});
+        }else{
+          socket.broadcast.emit('msg',{'msg':obj.msg,'user':obj.name});
+        }
     });
 
     socket.on('disconnect',function(){
         if(onlineList[socket.name]){
             delete onlineList[socket.name];
+            if(socketList[socket.name]){
+              delete socketList[socket.name];
+            }
             onlineCount--;
             io.emit('logout',{'onlineList':onlineList,'onlineCount':onlineCount,'user':socket.name});
         }
