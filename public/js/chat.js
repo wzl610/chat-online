@@ -11,7 +11,7 @@ var oChat = {
         //信息发送
         $('.chat-button').on('click',function(){
             var msg = $('.chat-input').val();
-            oChat.socket.emit('message',{'msg':msg,'name':oChat.name});
+            oChat.socket.emit('msg',{'msg':msg,'name':oChat.name});
             $('.chat-input').val('');
         })
     },
@@ -48,7 +48,7 @@ var oChat = {
             oChat.updateMsg(0,obj);
         });
         //消息
-        this.socket.on('message',function(obj){
+        this.socket.on('msg',function(obj){
             var $msg = '';
             if(oChat.name==obj.user){
                 //自己发的信息
@@ -59,8 +59,34 @@ var oChat = {
             }
             $('.chat').append($msg);
             oChat.scrollToBottom();
+        });
+
+        this.socket.on('message',function(obj){
+            //当服务器使用socket.send时接收
+            console.log(obj);
+        });
+
+        this.socket.on('other',function(obj){
+            console.log('other person connect!');
         })
-    }
+    }/*,
+    init : function(){
+            var chat = io.connect('http://localhost:3000/chat'),
+            news = io.connect('http://localhost:3000/news');
+
+            chat.on('connect', function () {
+                chat.emit('hi!');
+            });
+
+            chat.on('a message',function(obj){
+                console.dir(obj);
+            })
+
+            news.on('item', function (obj) {
+                console.log(obj);
+            });
+
+    }*/
 }
 
 $(function(){
