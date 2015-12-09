@@ -17,7 +17,7 @@ var oChat = {
             var $msg = '<section class="mymsg"><div>'+msg+'</div><span>'+oChat.name+'</span></section>';
             $('.chat').append($msg);
             oChat.scrollToBottom();
-            toUser = null ; 
+            oChat.toUser = null ; 
         })
     },
     toSomeOne:function(){
