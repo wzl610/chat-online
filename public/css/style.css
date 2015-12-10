@@ -255,3 +255,52 @@ section.othermsg>div:before{
 .online-link{
     color : #333;
 }
+
+.chat-window{
+    width: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -150px;
+    border:1px solid #ccc;
+}
+
+.window-head{
+    height: 24px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.window-head span{
+    margin:0 5px;
+}
+
+.window-content{
+    height: 200px;
+    border-bottom: 1px solid #ccc;
+    overflow-y:scroll;
+}
+
+.window-content .mymsg{
+    margin-right: 0;
+}
+
+.close{
+    display: inline-block;
+    float: right;
+    margin-right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: -2px;
+}
+
+.window-foot{
+    padding :10px 0 ;
+}
+
+.window-foot .chat-input{
+    width: 81%;
+}

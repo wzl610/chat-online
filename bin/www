@@ -88,5 +88,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
+//启用socket
 socket(server);
